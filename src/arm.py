@@ -10,7 +10,7 @@ class Arm:
         self.__holding = None
 
     def __str__(self):
-        return "Bras tient : " + str(self.__holding)
+        return "Arm(" + str(self.__holding) + ")"
 
     def isHolding(self):
         return self.__holding != None
@@ -19,6 +19,7 @@ class Arm:
         if (not self.isHolding()):
             if (isinstance(cube, Cube)):
                 self.__holding = cube
+                cube.setOnArm()
             else:
                 raise ArmException(
                     "Cannot hold something which is not a cube")
