@@ -10,7 +10,10 @@ def testArm():
     arm = Arm()
     print(arm)
     print(str(arm.isHolding()))
-    arm.hold(None)
+    try:
+        arm.hold(None)
+    except ArmException as e:
+        print(e)
     print(arm)
     arm.hold(A)
     print(arm)
