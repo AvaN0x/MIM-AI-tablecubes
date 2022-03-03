@@ -1,3 +1,6 @@
+class CubeException(Exception):
+    pass
+
 
 class Cube:
     """Instance of cube"""
@@ -14,11 +17,18 @@ class Cube:
     def onCube(self, cube):
         """"Check if the cube is on another cube"""
         # If the arg is a Cube, and the actually saved self.on is a cube, check if they are equals
-        return not self.onArm and isinstance(cube, Cube) and isinstance(self.on, Cube) and self.on == cube
+        return (not self.onArm
+                and isinstance(cube, Cube)
+                and isinstance(self.on, Cube)
+                and self.on == cube)
 
     def setOn(self, on):
         """Setter for where the cube is on"""
-        self.on = on
+        if (on == None or isinstance(on, Cube)):
+            self.on = on
+        else:
+            raise CubeException(
+                "Cannot be on something which is not a cube or None")
 
     def __str__(self):
         """str method for Cube"""
