@@ -1,7 +1,8 @@
 from cube import *
+from arm import *
+from test import testArm, testCube
 
-A = Cube("A")
-B = Cube("B")
-print(B)
-B.on = A
-print(B)
+# ====== TESTS ======
+testArm()
+testCube()
+# ====== END TESTS ======

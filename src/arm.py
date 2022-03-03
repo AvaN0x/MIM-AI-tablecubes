@@ -1,3 +1,6 @@
+from cube import Cube
+
+
 class Arm:
     def __init__(self):
         self.__holding = None
