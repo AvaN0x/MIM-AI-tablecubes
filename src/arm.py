@@ -1,6 +1,10 @@
 from cube import Cube
 
 
+class ArmException(Exception):
+    pass
+
+
 class Arm:
     def __init__(self):
         self.__holding = None
@@ -16,8 +20,7 @@ class Arm:
             if (cube == None or isinstance(cube, Cube)):
                 self.__holding = cube
             else:
-                raise Exception(
+                raise ArmException(
                     "Cannot hold something which is not a cube or None")
         else:
-            raise Exception(
-                "Arm is already holding a cube")
+            raise ArmException("Arm is already holding a cube")
