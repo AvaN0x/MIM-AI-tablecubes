@@ -1,8 +1,8 @@
 from cube import *
 from arm import *
-from test import testArm, testCube
+import test
 
 # ====== TESTS ======
-testArm()
-testCube()
+test.testArm()
+test.testCube()
 # ====== END TESTS ======
