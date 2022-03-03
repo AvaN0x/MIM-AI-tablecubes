@@ -13,9 +13,11 @@ class Arm:
 
     def hold(self, cube):
         if (not self.isHolding()):
-            if (isinstance(cube, Cube)):
+            if (cube == None or isinstance(cube, Cube)):
                 self.__holding = cube
             else:
-                print("L'objet a tenir n'est pas un cube !")
+                raise Exception(
+                    "Cannot hold something which is not a cube or None")
         else:
-            print("Le bras tient déjà un objet !")
+            raise Exception(
+                "Arm is already holding a cube")
