@@ -28,8 +28,11 @@ def testArm():
 def testCube():
     print("======================= TESTS FOR CUBES =======================")
     A = Cube("A")
+    print(A)
     B = Cube("B")
     print(B)
+    print("Put B on A")
     B.on = A
+    print(A)
     print(B)
     print("======================= END TESTS FOR CUBES =======================\n")
