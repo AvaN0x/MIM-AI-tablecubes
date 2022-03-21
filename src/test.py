@@ -17,7 +17,10 @@ def testArm():
     print(arm)
     arm.hold(A)
     print(arm)
-    arm.hold(B)
+    try:
+        arm.hold(B)
+    except ArmException as e:
+        print(e)
     print(arm)
     print("======================= END TESTS FOR ARM =======================\n")
 
