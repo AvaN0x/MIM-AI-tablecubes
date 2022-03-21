@@ -1,6 +1,3 @@
-import arm
-
-
 class CubeException(Exception):
     pass
 
@@ -18,7 +15,7 @@ class Cube:
         return not self.onArm and self.__on == None
 
     def onCube(self, cube):
-        """"Check if the cube is on another cube"""
+        """Check if the cube is on another cube"""
         # If the arg is a Cube, and the actually saved self.on is a cube, check if they are equals
         return (not self.onArm
                 and isinstance(cube, Cube)
