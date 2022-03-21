@@ -9,7 +9,7 @@ def testArm():
     print("======================= TESTS FOR ARM =======================")
     arm = Arm()
     print(arm)
-    print(str(arm.isHolding()))
+    print("Arm is holding : " + str(arm.isHolding()))
     try:
         arm.hold(None)
     except ArmException as e:
