@@ -35,4 +35,13 @@ class Arm:
         else:
             raise ArmException("Arm has nothing to drop")
 
+    def draw(self):
+        if (self._holding == None):
+            print("  ╷  ")
+            print("┌─┴─┐")
+            print("╵   ╵")
+        else:
+            print("  │  ")
+            self._holding.draw()
+
     holding = property(None, hold, None, "I'm the 'holding' property.")

@@ -66,6 +66,18 @@ class Cube:
         res += ")"
         return res
 
+    def draw(self):
+        # Draw first line
+        if (not self._free and not self._onArm):
+            print("├───┤")
+        else:
+            print("┌───┐")
+
+        print("│ " + self._label + " │")
+
+        if (self._on == None):
+            print("└───┘")
+
     on = property(None, setOn, None, "I'm the 'on' property.")
     onArm = property(None, None, None, "I'm the 'onArm' property.")
     free = property(isFree, setFree, None, "I'm the 'free' property.")
