@@ -1,3 +1,4 @@
+import copy
 from arm import *
 
 
@@ -58,6 +59,10 @@ class Table:
 
         print()
         self.arm.draw()
+
+    def clone(self):
+        """Clone the table"""
+        return copy.deepcopy(self)
 
     @ staticmethod
     def getTableSubject():
