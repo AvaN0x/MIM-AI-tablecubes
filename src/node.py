@@ -21,7 +21,8 @@ class Node:
 
     def addNode(self, node):
         """Add a node to the childrens"""
-        self.childrens.append(node)
+        if self.childrens != None:
+            self.childrens.append(node)
 
     def __str__(self, t=0):
         """Recursive str method for the node"""
