@@ -65,8 +65,19 @@ class Table:
         return copy.deepcopy(self)
 
     @ staticmethod
-    def getTableSubject():
-        """Get the table subject"""
+    def getTableSubjectStart():
+        """Get the starting table subject"""
+        A = Cube("A")
+        B = Cube("B")
+        C = Cube("C")
+        table = Table(A, B, C)
+
+        C.on = A
+        return table
+
+    @ staticmethod
+    def getTableSubjectGoal():
+        """Get the goal table subject"""
         A = Cube("A")
         B = Cube("B")
         C = Cube("C")
