@@ -1,3 +1,7 @@
+from anytree import Node as ATNode, RenderTree as ATRenderTree  # pip install anytree
+from anytree.exporter import UniqueDotExporter
+
+
 class Node:
     """Class node representing a node from a tree"""
 
@@ -41,3 +45,27 @@ class Node:
         res += ")"
         return res
 
+    def draw(self, dot=False, dotFileName=None, nodenamefunc=None, nodeattrfunc=None):
+        """Draw the tree using AnyTree RenderTree or DotExporter"""
+        if dot:
+            UniqueDotExporter(self.getAnyTreeNode(), nodenamefunc=nodenamefunc, nodeattrfunc=nodeattrfunc).to_picture(
+                dotFileName if dotFileName != None else "tree.png")
+
+        else:
+            # Code taken from the documentation
+            for pre, fill, node in ATRenderTree(self.getAnyTreeNode()):
+                print("%s%s" % (pre, node.name))
+
+    def getAnyTreeNode(self, parent=None):
+        """Recursive call to create a tree for AnyTree"""
+        # If we don't have a parent, then this node is the parent
+        if parent == None:
+            node = ATNode(self.value)
+        else:
+            node = ATNode(self.value, parent=parent)
+
+        # Recursive call to create childrens
+        if self.childrens != None:
+            for childnode in self.childrens:
+                childnode.getAnyTreeNode(node)
+        return node
