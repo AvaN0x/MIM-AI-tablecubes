@@ -46,6 +46,10 @@ class Node:
         res += ")"
         return res
 
+    def valueStr(self):
+        """Return the value of the node as a string"""
+        return str(self.value)
+
     def draw(self, dot=False, dotFileName=None, nodenamefunc=None, nodeattrfunc=None):
         """Draw the tree using AnyTree RenderTree or DotExporter"""
         if dot:
@@ -61,9 +65,9 @@ class Node:
         """Recursive call to create a tree for AnyTree"""
         # If we don't have a parent, then this node is the parent
         if parent == None:
-            node = ATNode(self.value)
+            node = ATNode(self.valueStr())
         else:
-            node = ATNode(self.value, parent=parent)
+            node = ATNode(self.valueStr(), parent=parent)
 
         # Recursive call to create childrens
         if self.childrens != None:
