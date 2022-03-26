@@ -1,5 +1,6 @@
 from arm import *
 from cube import *
+from astar import astarNode
 
 
 def testArm():
@@ -43,3 +44,26 @@ def testCube():
     A.draw()
 
     print("======================= END TESTS FOR CUBES =======================\n")
+
+
+def testAstarNode():
+    print("======================= TESTS FOR ASTAR NODES =======================")
+    # These test uses Cubes only for test purposes
+    node = astarNode(Cube("A"), [
+        astarNode(Cube("B"), [
+            astarNode(Cube("D")),
+            astarNode(Cube("E"))
+        ]),
+        astarNode(Cube("C"), [
+            astarNode(Cube("F")),
+            astarNode(Cube("G"))
+        ])
+    ])
+    node.draw(dot=True, dotFileName="test.png")
+    print("======================= END TESTS FOR ASTAR NODES =======================\n")
+
+
+if __name__ == "__main__":
+    # testArm()
+    # testCube()
+    testAstarNode()
