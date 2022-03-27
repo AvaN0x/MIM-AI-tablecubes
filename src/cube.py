@@ -86,19 +86,6 @@ class Cube:
         res += ")"
         return res
 
-    def draw(self):
-        """Draw the cube"""
-        # Draw first line
-        if (not self._free and not self._onArm):
-            print("├───┤")
-        else:
-            print("┌───┐")
-
-        print("│ " + self._label + " │")
-
-        if (self._on == None):
-            print("└───┘")
-
     def __eq__(self, op):
         """Overload the '==' operator"""
         return (isinstance(op, Cube)

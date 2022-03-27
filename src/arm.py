@@ -43,16 +43,6 @@ class Arm:
         else:
             raise ArmException("Arm has nothing to drop")
 
-    def draw(self):
-        """Draw the arm"""
-        if (self._holding == None):
-            print("  ╷  ")
-            print("┌─┴─┐")
-            print("╵   ╵")
-        else:
-            print("  │  ")
-            self._holding.draw()
-
     def __eq__(self, op):
         """Overload the '==' operator"""
         return (isinstance(op, Arm)

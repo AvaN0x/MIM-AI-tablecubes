@@ -16,17 +16,17 @@ from astar import astar
 def h1(value, node=None):
     """Heuristic 1 for A* : h(x) = 6 - (ON(A,B) + ON(B,C) + ONTABLE(C))"""
     res = 6
-    if (value.A.onCube(value.B)):
+    if (value.getCube(label="A").onCube(value.getCube(label="B"))):
         res -= 1
     else:
         res += 1
 
-    if (value.B.onCube(value.C)):
+    if (value.getCube(label="B").onCube(value.getCube(label="C"))):
         res -= 2
     else:
         res += 2
 
-    if (value.C.onTable()):
+    if (value.getCube(label="C").onTable()):
         res -= 3
     else:
         res += 3
@@ -43,17 +43,17 @@ def h2(value, node):
     """Difference count between the current node and the goal"""
     res = 0
 
-    if (not value.C.onTable()):
+    if (not value.getCube(label="C").onTable()):
         res += 1
-    if (value.C.free):
+    if (value.getCube(label="C").free):
         res += 1
-    if (not value.B.onCube(value.C)):
+    if (not value.getCube(label="B").onCube(value.getCube(label="C"))):
         res += 1
-    if (value.B.free):
+    if (value.getCube(label="B").free):
         res += 1
-    if (not value.A.onCube(value.B)):
+    if (not value.getCube(label="A").onCube(value.getCube(label="B"))):
         res += 1
-    if (not value.A.free):
+    if (not value.getCube(label="A").free):
         res += 1
 
     return res
@@ -67,12 +67,10 @@ def g2(value, node):
 tableStart = Table.getTableSubjectStart()
 print("tableStart:\n" + str(tableStart) + "\n" +
       ", h1=" + str(h1(tableStart)), ", g1=" + str(g1(tableStart)))
-# tableStart.draw()
 
 tableGoal = Table.getTableSubjectGoal()
 print("tableGoal:\n" + str(tableGoal) + "\n" +
       ", h1=" + str(h1(tableGoal)), ", g1=" + str(g1(tableGoal)))
-# tableGoal.draw()
 
 
 tree1 = astar(h1, g1,

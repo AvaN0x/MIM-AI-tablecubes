@@ -5,13 +5,10 @@ from arm import *
 class Table:
     """Instance of Table"""
 
-    def __init__(self, cubeA, cubeB, cubeC):
+    def __init__(self, cubes):
         """Constructor for the table"""
         self.arm = Arm()
-        self.A = cubeA
-        self.B = cubeB
-        self.C = cubeC
-        self.cubes = [self.A, self.B, self.C]
+        self.cubes = cubes
 
     def __str__(self, detailed=False):
         """str method for Table"""
@@ -39,44 +36,6 @@ class Table:
 
         return res
 
-    def draw(self):
-        """Draw the state of the table"""
-        if (self.A._free):
-            self.A.draw()
-            if (self.A.onCube(self.B)):
-                self.B.draw()
-                if (self.B.onCube(self.C)):
-                    self.C.draw()
-            if (self.A.onCube(self.C)):
-                self.C.draw()
-                if (self.C.onCube(self.B)):
-                    self.B.draw()
-
-        if (self.B._free):
-            self.B.draw()
-            if (self.B.onCube(self.A)):
-                self.A.draw()
-                if (self.A.onCube(self.C)):
-                    self.C.draw()
-            if (self.B.onCube(self.C)):
-                self.C.draw()
-                if (self.C.onCube(self.A)):
-                    self.A.draw()
-
-        if (self.C._free):
-            self.C.draw()
-            if (self.C.onCube(self.A)):
-                self.A.draw()
-                if (self.A.onCube(self.B)):
-                    self.B.draw()
-            if (self.C.onCube(self.B)):
-                self.B.draw()
-                if (self.B.onCube(self.A)):
-                    self.A.draw()
-
-        print()
-        self.arm.draw()
-
     def getCube(self, cube=None, label=None):
         """Get a cube from the table"""
         for c in self.cubes:
@@ -93,9 +52,7 @@ class Table:
         """Overload the '==' operator"""
         return (isinstance(op, Table)
                 and self.arm == op.arm
-                and self.A == op.A
-                and self.B == op.B
-                and self.C == op.C)
+                and self.cubes == op.cubes)
 
     def getSuccessors(self):
         """Get every possible successors of this state"""
@@ -128,16 +85,16 @@ class Table:
     @ staticmethod
     def getTableSubjectStart():
         """Get the starting table subject"""
-        table = Table(Cube("A"), Cube("B"), Cube("C"))
+        table = Table([Cube("A"), Cube("B"), Cube("C")])
 
-        table.C.on = table.A
+        table.getCube(label="C").on = table.getCube(label="A")
         return table
 
     @ staticmethod
     def getTableSubjectGoal():
         """Get the goal table subject"""
-        table = Table(Cube("A"), Cube("B"), Cube("C"))
+        table = Table([Cube("A"), Cube("B"), Cube("C")])
 
-        table.A.on = table.B
-        table.B.on = table.C
+        table.getCube(label="A").on = table.getCube(label="B")
+        table.getCube(label="B").on = table.getCube(label="C")
         return table
