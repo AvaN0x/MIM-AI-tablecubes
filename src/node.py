@@ -19,10 +19,12 @@ class Node:
         """Set parent of a node"""
         self.parent = parent
 
-    def addNode(self, node):
+    def addChild(self, node):
         """Add a node to the childrens"""
-        if self.childrens != None:
-            self.childrens.append(node)
+        if self.childrens == None:
+            self.childrens = []
+        self.childrens.append(node)
+        node.setParent(self)
 
     def __str__(self, t=0):
         """Recursive str method for the node"""
