@@ -8,10 +8,10 @@ class Node:
     def __init__(self, value=None, childrens=None, parent=None):
         """Constructor of this node, default values for value and nodes are None"""
         self.depth = 0
-        if parent != None:
-            parent.childrens.addChild(self)
         self.value = value
         self.childrens = childrens
+        if parent != None:
+            parent.addChild(self)
         # Set parent of each child
         if self.childrens != None:
             for node in self.childrens:
@@ -20,7 +20,7 @@ class Node:
     def setParent(self, parent):
         """Set parent of a node"""
         self.parent = parent
-        self.setDepth(self.depth + 1)
+        self.setDepth(self.parent.depth + 1)
 
     def setDepth(self, depth):
         """Set the depth of the node"""

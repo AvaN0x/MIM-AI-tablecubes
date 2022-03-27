@@ -14,7 +14,7 @@ class Arm:
 
     def __str__(self):
         """str method for Arm"""
-        return "Arm(" + str(self._holding) + ")"
+        return "Arm(" + str(self._holding.label if self._holding != None else None) + ")"
 
     def isHolding(self):
         """Check if the arm is holding a cube"""
@@ -25,7 +25,7 @@ class Arm:
         if (not self.isHolding()):
             if (isinstance(cube, Cube)):
                 self._holding = cube
-                cube.setOnArm()
+                self._holding.setOnArm()
             else:
                 raise ArmException("Cannot hold something which is not a cube")
         else:
@@ -36,7 +36,7 @@ class Arm:
         if (self.isHolding()):
             try:
                 # If .on raises an exception, it will be caught here and the arm will still be holding the cube
-                self._holding.on(dropOn)
+                self._holding.on = dropOn
                 self._holding = None
             except CubeException as e:
                 print(e)

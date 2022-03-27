@@ -9,10 +9,11 @@ class Cube:
     """Instance of cube"""
 
     def __init__(self, label="?", on=None):
-        self._on = on  # None is table, Cube is another cube, else would be the robotic arm
-        self._onArm = False
-        self._free = True
-        self._label = label
+        self._on = on  # None is table or arm, Cube is another cube
+        self._isUnder = False  # True if cube is under another cube
+        self._onArm = False  # True if cube is on the arm
+        self._free = True  # True if cube is free
+        self._label = label  # Label of the cube
 
     def getLabel(self):
         """Getter for label"""
@@ -38,31 +39,46 @@ class Cube:
         """Setter for where the cube is on"""
         if (on == None or isinstance(on, Cube)):
             self._on = on
-            on.setFree(False)
+            self._onArm = False
+            self.free = not self._isUnder
+            if self._on != None:
+                self._on.free = False
+                self._on._isUnder = True
+
         else:
             raise CubeException(
                 "Cannot be on something which is not a cube or None")
 
     def setFree(self, free):
         """Setter for free"""
-        if (isinstance(free, boolean)):
+        if isinstance(free, boolean):
             self._free = free
 
     def setOnArm(self):
         """Set the cube as being on the arm"""
-        self._on = None
-        self._onArm = True
-        self._free = False
+        if self.free:
+            if self._on != None:
+                self._on._isUnder = False
+                self._on.free = True
+                self._on = None
+            self._onArm = True
+            self.free = False
+            self._isUnder = False
+        else:
+            raise CubeException(
+                "Cannot put a cube on the arm if it is not free")
 
     def __str__(self):
         """str method for Cube"""
         res = "Cube(" + self._label
         if self.onTable():
             res += ", onTable"
-        elif isinstance(self._on, Cube):
-            res += ", onCube(" + self._on.label + ")"
+        elif self._on != None:
+            res += ", onCube(" + str(self._on.label) + ")"
+        else:
+            res += ", onArm"
 
-        res += ", free : " + str(self.isFree())
+        res += ", free: " + str(self._free)
         res += ")"
         return res
 
@@ -83,9 +99,13 @@ class Cube:
         """Overload the '==' operator"""
         return (isinstance(op, Cube)
                 and self._label == op.label
-                and self._on == op._on)
+                and self._on == op._on
+                and self._isUnder == op._isUnder
+                and self._free == op._free
+                and self._onArm == op._onArm)
 
     on = property(None, setOn, None, "I'm the 'on' property.")
+    isUnder = property(None, None, None, "I'm the 'under' property.")
     onArm = property(None, None, None, "I'm the 'onArm' property.")
     free = property(isFree, setFree, None, "I'm the 'free' property.")
     label = property(getLabel, None, None, "I'm the 'label' property.")

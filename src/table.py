@@ -11,14 +11,13 @@ class Table:
         self.A = cubeA
         self.B = cubeB
         self.C = cubeC
+        self.cubes = [self.A, self.B, self.C]
 
     def __str__(self):
         """str method for Table"""
-        res = "Table(\n\t" + str(self.arm) + "\n\t"
-        res += str(self.A) + "\n\t" + str(self.B) + \
-            "\n\t" + str(self.C)
-        # for cube in self.cubes:
-        #     res += ",\n\t" + str(cube)
+        res = "Table(\n\t" + str(self.arm)
+        for cube in self.cubes:
+            res += ",\n\t" + str(cube)
 
         res += "\n)"
         return res
@@ -61,6 +60,14 @@ class Table:
         print()
         self.arm.draw()
 
+    def getCube(self, cube=None, label=None):
+        """Get a cube from the table"""
+        for c in self.cubes:
+            if ((label != None and c.label == label)
+                    or (cube != None and c == cube)):
+                return c
+        return None
+
     def clone(self):
         """Clone the table"""
         return copy.deepcopy(self)
@@ -72,6 +79,34 @@ class Table:
                 and self.A == op.A
                 and self.B == op.B
                 and self.C == op.C)
+
+    def getSuccessors(self):
+        """Get every possible successors of this state"""
+        successors = []
+
+        # Action of placing a cube on the table or on a cube
+        if self.arm.isHolding():
+            # Place the cube on another cube
+            for cube in self.cubes:
+                if cube.free:
+                    newTable = self.clone()
+                    newTable.arm.drop(newTable.getCube(cube=cube))
+                    successors.append(newTable)
+
+            # Place the cube on the table
+            newTable = self.clone()
+            newTable.arm.drop(None)
+            successors.append(newTable)
+
+        else:
+            # Try to hold each free cubes
+            for cube in self.cubes:
+                if cube.free:
+                    newTable = self.clone()
+                    newTable.arm.hold(newTable.getCube(cube=cube))
+                    successors.append(newTable)
+
+        return successors
 
     @ staticmethod
     def getTableSubjectStart():
