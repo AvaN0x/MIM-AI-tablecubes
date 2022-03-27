@@ -13,20 +13,20 @@ from astar import astar
 # ======================== MAIN ========================
 
 
-def h1(table):
+def h1(value, node=None):
     """Heuristic 1 for A* : h(x) = 6 - (ON(A,B) + ON(B,C) + ONTABLE(C))"""
     res = 6
-    if (table.A.onCube(table.B)):
+    if (value.A.onCube(value.B)):
         res -= 1
     else:
         res += 1
 
-    if (table.B.onCube(table.C)):
+    if (value.B.onCube(value.C)):
         res -= 2
     else:
         res += 2
 
-    if (table.C.onTable()):
+    if (value.C.onTable()):
         res -= 3
     else:
         res += 3
@@ -34,32 +34,33 @@ def h1(table):
     return res
 
 
-def g1(table):
+def g1(value, node=None):
+    return node.depth if node != None else 0
+
+
+def h2(value, node):
     # TODO: implement
     return -1
 
 
-def h2(table):
-    # TODO: implement
-    return -1
-
-
-def g2(table):
-    # TODO: implement
-    return -1
+def g2(value, node):
+    return node.depth if node != None else 0
 
 
 tableStart = Table.getTableSubjectStart()
 print("tableStart:", tableStart,
       ", h1=" + str(h1(tableStart)), ", g1=" + str(g1(tableStart)))
-tableStart.draw()
+# tableStart.draw()
+
 tableGoal = Table.getTableSubjectGoal()
 print("tableGoal:", tableGoal,
       ", h1=" + str(h1(tableGoal)), ", g1=" + str(g1(tableGoal)))
-tableGoal.draw()
+# tableGoal.draw()
 
-# tree1 = astar(h1, g1,
-#               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+
+tree1 = astar(h1, g1,
+              Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+tree1.draw(dot=True, dotFileName="tree1.png")
 
 # tree2 = astar(h2, g2,
 #               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
