@@ -65,28 +65,27 @@ class Table:
         """Clone the table"""
         return copy.deepcopy(self)
 
+    def __eq__(self, op):
+        """Overload the '==' operator"""
+        return (isinstance(op, Table)
+                and self.arm == op.arm
+                and self.A == op.A
+                and self.B == op.B
+                and self.C == op.C)
+
     @ staticmethod
     def getTableSubjectStart():
         """Get the starting table subject"""
-        A = Cube("A")
-        B = Cube("B")
-        C = Cube("C")
-        table = Table(A, B, C)
+        table = Table(Cube("A"), Cube("B"), Cube("C"))
 
-        C.on = A
+        table.C.on = table.A
         return table
 
     @ staticmethod
     def getTableSubjectGoal():
         """Get the goal table subject"""
-        A = Cube("A")
-        B = Cube("B")
-        C = Cube("C")
-        table = Table(A, B, C)
-        # C.on = A
-        # B.setOnArm()
-        # table.arm._holding = B
+        table = Table(Cube("A"), Cube("B"), Cube("C"))
 
-        A.on = B
-        B.on = C
+        table.A.on = table.B
+        table.B.on = table.C
         return table

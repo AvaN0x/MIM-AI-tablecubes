@@ -53,4 +53,9 @@ class Arm:
             print("  │  ")
             self._holding.draw()
 
+    def __eq__(self, op):
+        """Overload the '==' operator"""
+        return (isinstance(op, Arm)
+                and self._holding == op._holding)
+
     holding = property(None, hold, None, "I'm the 'holding' property.")

@@ -79,6 +79,12 @@ class Cube:
         if (self._on == None):
             print("└───┘")
 
+    def __eq__(self, op):
+        """Overload the '==' operator"""
+        return (isinstance(op, Cube)
+                and self._label == op.label
+                and self._on == op._on)
+
     on = property(None, setOn, None, "I'm the 'on' property.")
     onArm = property(None, None, None, "I'm the 'onArm' property.")
     free = property(isFree, setFree, None, "I'm the 'free' property.")
