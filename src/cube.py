@@ -10,7 +10,7 @@ class Cube:
 
     def __init__(self, label="?", on=None):
         self._on = on  # None is table or arm, Cube is another cube
-        self._isUnder = False  # True if cube is under another cube
+        self._under = None  # Cube or None
         self._onArm = False  # True if cube is on the arm
         self._free = True  # True if cube is free
         self._label = label  # Label of the cube
@@ -35,15 +35,19 @@ class Cube:
                 and isinstance(self._on, Cube)
                 and self._on == cube)
 
+    def getOn(self):
+        """Getter for where the cube is on"""
+        return self._on
+
     def setOn(self, on):
         """Setter for where the cube is on"""
         if (on == None or isinstance(on, Cube)):
             self._on = on
             self._onArm = False
-            self.free = not self._isUnder
+            self.free = self._under == None
             if self._on != None:
                 self._on.free = False
-                self._on._isUnder = True
+                self._on._under = self
 
         else:
             raise CubeException(
@@ -58,12 +62,12 @@ class Cube:
         """Set the cube as being on the arm"""
         if self.free:
             if self._on != None:
-                self._on._isUnder = False
+                self._on._under = None
                 self._on.free = True
                 self._on = None
             self._onArm = True
             self.free = False
-            self._isUnder = False
+            self._under = None
         else:
             raise CubeException(
                 "Cannot put a cube on the arm if it is not free")
@@ -100,12 +104,11 @@ class Cube:
         return (isinstance(op, Cube)
                 and self._label == op.label
                 and self._on == op._on
-                and self._isUnder == op._isUnder
                 and self._free == op._free
                 and self._onArm == op._onArm)
 
-    on = property(None, setOn, None, "I'm the 'on' property.")
-    isUnder = property(None, None, None, "I'm the 'under' property.")
+    on = property(getOn, setOn, None, "I'm the 'on' property.")
+    under = property(None, None, None, "I'm the 'under' property.")
     onArm = property(None, None, None, "I'm the 'onArm' property.")
     free = property(isFree, setFree, None, "I'm the 'free' property.")
     label = property(getLabel, None, None, "I'm the 'label' property.")

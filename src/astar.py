@@ -16,7 +16,7 @@ class astarNode(Node):
 
     def valueStr(self):
         """Return the value of the node as a string"""
-        return super().valueStr() + ", g=" + str(self.g) + ", h=" + str(self.h) + ", f=" + str(self.f)
+        return (super().valueStr() + "\ng=" + str(self.g) + ", h=" + str(self.h)).replace('\n', '\l')
 
     def __eq__(self, op):
         """Overload the '==' operator"""

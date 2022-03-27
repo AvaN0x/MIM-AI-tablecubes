@@ -13,13 +13,30 @@ class Table:
         self.C = cubeC
         self.cubes = [self.A, self.B, self.C]
 
-    def __str__(self):
+    def __str__(self, detailed=False):
         """str method for Table"""
-        res = "Table(\n\t" + str(self.arm)
-        for cube in self.cubes:
-            res += ",\n\t" + str(cube)
+        res = ""
+        if detailed:
+            res += "Table(\n\t" + str(self.arm)
+            for cube in self.cubes:
+                res += ",\n\t" + str(cube)
 
-        res += "\n)"
+            res += "\n)"
+
+        else:
+            res += "-["
+            if self.arm.isHolding():
+                res += str(self.arm._holding.label)
+            res += "]"
+
+            for cube in self.cubes:
+                if cube.onTable():
+                    res += "\n|"
+                    current = cube
+                    while current != None:
+                        res += str(current.label) + '|'
+                        current = current._under
+
         return res
 
     def draw(self):

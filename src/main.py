@@ -48,12 +48,12 @@ def g2(value, node):
 
 
 tableStart = Table.getTableSubjectStart()
-print("tableStart:", tableStart,
+print("tableStart:\n" + str(tableStart) + "\n" +
       ", h1=" + str(h1(tableStart)), ", g1=" + str(g1(tableStart)))
 # tableStart.draw()
 
 tableGoal = Table.getTableSubjectGoal()
-print("tableGoal:", tableGoal,
+print("tableGoal:\n" + str(tableGoal) + "\n" +
       ", h1=" + str(h1(tableGoal)), ", g1=" + str(g1(tableGoal)))
 # tableGoal.draw()
 
