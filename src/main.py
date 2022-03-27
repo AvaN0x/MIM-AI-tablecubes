@@ -35,15 +35,32 @@ def h1(value, node=None):
 
 
 def g1(value, node=None):
+    """Count of move executed"""
     return node.depth if node != None else 0
 
 
 def h2(value, node):
-    # TODO: implement
-    return -1
+    """Difference count between the current node and the goal"""
+    res = 0
+
+    if (not value.C.onTable()):
+        res += 1
+    if (value.C.free):
+        res += 1
+    if (not value.B.onCube(value.C)):
+        res += 1
+    if (value.B.free):
+        res += 1
+    if (not value.A.onCube(value.B)):
+        res += 1
+    if (not value.A.free):
+        res += 1
+
+    return res
 
 
 def g2(value, node):
+    """Count of move executed"""
     return node.depth if node != None else 0
 
 
@@ -62,6 +79,7 @@ tree1 = astar(h1, g1,
               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
 tree1.draw(dot=True, dotFileName="tree1.png")
 
-# tree2 = astar(h2, g2,
-#               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+tree2 = astar(h2, g2,
+              Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+tree2.draw(dot=True, dotFileName="tree2.png")
 # ======================== END MAIN ========================
