@@ -67,6 +67,7 @@ class Cube:
         return res
 
     def draw(self):
+        """Draw the cube"""
         # Draw first line
         if (not self._free and not self._onArm):
             print("├───┤")

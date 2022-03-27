@@ -6,6 +6,7 @@ class Table:
     """Instance of Table"""
 
     def __init__(self, cubeA, cubeB, cubeC):
+        """Constructor for the table"""
         self.arm = Arm()
         self.A = cubeA
         self.B = cubeB

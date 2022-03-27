@@ -16,6 +16,7 @@ class astarNode(Node):
         return super().valueStr() + ", position=" + str(self.position) + ", g=" + str(self.g) + ", h=" + str(self.h) + ", f=" + str(self.f)
 
     def __eq__(self, op):
+        """Overload the '==' operator"""
         return self.position == op.position
 
 

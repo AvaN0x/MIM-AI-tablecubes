@@ -6,16 +6,22 @@ class ArmException(Exception):
 
 
 class Arm:
+    """Instance of Arm"""
+
     def __init__(self):
+        """Constructor for Arm"""
         self._holding = None
 
     def __str__(self):
+        """str method for Arm"""
         return "Arm(" + str(self._holding) + ")"
 
     def isHolding(self):
+        """Check if the arm is holding a cube"""
         return self._holding != None
 
     def hold(self, cube):
+        """Hold a cube"""
         if (not self.isHolding()):
             if (isinstance(cube, Cube)):
                 self._holding = cube
@@ -26,8 +32,10 @@ class Arm:
             raise ArmException("Arm is already holding a cube")
 
     def drop(self, dropOn=None):
+        """Drop the cube on the table or on another cube"""
         if (self.isHolding()):
             try:
+                # If .on raises an exception, it will be caught here and the arm will still be holding the cube
                 self._holding.on(dropOn)
                 self._holding = None
             except CubeException as e:
@@ -36,6 +44,7 @@ class Arm:
             raise ArmException("Arm has nothing to drop")
 
     def draw(self):
+        """Draw the arm"""
         if (self._holding == None):
             print("  ╷  ")
             print("┌─┴─┐")
