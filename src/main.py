@@ -1,14 +1,8 @@
-# from cube import *
-# from arm import *
 import test
 from table import *
 from astar import astar
-
-# ====== TESTS ======
-# test.testArm()
-# test.testCube()
-# test.testAstarNode()
-# ====== END TESTS ======
+import utils
+from colorama import Fore, Style  # pip install colorama
 
 # ======================== MAIN ========================
 
@@ -39,7 +33,7 @@ def g1(value, node=None):
     return node.depth if node != None else 0
 
 
-def h2(value, node):
+def h2(value, node=None):
     """Difference count between the current node and the goal"""
     res = 0
 
@@ -59,25 +53,35 @@ def h2(value, node):
     return res
 
 
-def g2(value, node):
+def g2(value, node=None):
     """Count of move executed"""
     return node.depth if node != None else 0
 
 
+print(f"{Fore.YELLOW}Table states{Style.RESET_ALL}")
 tableStart = Table.getTableSubjectStart()
-print("tableStart:\n" + str(tableStart) + "\n" +
-      ", h1=" + str(h1(tableStart)), ", g1=" + str(g1(tableStart)))
+print(f"{Fore.CYAN}Table subject start (h1={Fore.BLUE}{h1(tableStart)}{Fore.CYAN}, g1={Fore.BLUE}{g1(tableStart)}{Fore.CYAN}, h2={Fore.BLUE}{h2(tableStart)}{Fore.CYAN}, g2={Fore.BLUE}{g2(tableStart)}{Fore.CYAN}) :{Style.RESET_ALL}")
+print(str(tableStart))
 
 tableGoal = Table.getTableSubjectGoal()
-print("tableGoal:\n" + str(tableGoal) + "\n" +
-      ", h1=" + str(h1(tableGoal)), ", g1=" + str(g1(tableGoal)))
+print(f"{Fore.CYAN}Table subject goal (h1={Fore.BLUE}{h1(tableGoal)}{Fore.CYAN}, g1={Fore.BLUE}{g1(tableGoal)}{Fore.CYAN}, h2={Fore.BLUE}{h2(tableGoal)}{Fore.CYAN}, g2={Fore.BLUE}{g2(tableGoal)}{Fore.CYAN}) :{Style.RESET_ALL}")
+print(str(tableGoal))
 
 
-tree1 = astar(h1, g1,
-              Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+print(f"{Fore.YELLOW}\nA*{Style.RESET_ALL}")
+print(
+    f"{Fore.CYAN}Processing A* with {Fore.BLUE}h1{Fore.CYAN} and {Fore.BLUE}g1{Fore.CYAN}...{Style.RESET_ALL}")
+# tree1 = astar(h1, g1,
+#               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+tree1 = utils.PrintElapsedTime(func=lambda:
+                               astar(h1, g1, Table.getTableSubjectStart(), Table.getTableSubjectGoal()))
 tree1.draw(dot=True, dotFileName="tree1.png")
 
-tree2 = astar(h2, g2,
-              Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+print(
+    f"{Fore.CYAN}Processing A* with {Fore.BLUE}h2{Fore.CYAN} and {Fore.BLUE}g2{Fore.CYAN}...{Style.RESET_ALL}")
+# tree2 = astar(h2, g2,
+#               Table.getTableSubjectStart(), Table.getTableSubjectGoal())
+tree2 = utils.PrintElapsedTime(func=lambda:
+                               astar(h2, g2, Table.getTableSubjectStart(), Table.getTableSubjectGoal()))
 tree2.draw(dot=True, dotFileName="tree2.png")
 # ======================== END MAIN ========================
