@@ -31,6 +31,7 @@ def astar(funcHeuristic, funcCost, startValue, goalValue):
     root.g = funcCost(value=root.value, node=root)
     root.f = root.g + root.h
 
+    # Create the open and closed lists
     openedNodes = [root]
     closedNodes = []
 
@@ -53,18 +54,21 @@ def astar(funcHeuristic, funcCost, startValue, goalValue):
             if child.value == goalValue:
                 return root
 
-            # Add to opened if not already in opened or closed
             if not (child in openedNodes or child in closedNodes):
+                # Add to opened if not already in opened or closed
                 openedNodes.append(child)
             elif child in openedNodes:
+                # If already in opened, and new cost is lower, update
                 openedNode = openedNodes[openedNodes.index(child)]
                 if child.g < openedNode.g:
                     openedNodes.remove(openedNode)
                     openedNodes.append(child)
             elif child in closedNodes:
+                # If closed, reopen it
                 closedNodes.remove(child)
                 openedNodes.append(child)
 
+        # Sort by f
         openedNodes.sort(key=lambda x: x.f)
 
     raise AstarException("Error: A* couldn't find a path")
